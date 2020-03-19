@@ -1,9 +1,6 @@
 package com.kata.taxcalculation.model;
 
-import java.math.BigDecimal;
-
 import com.kata.taxcalculation.domain.Product;
-import com.kata.taxcalculation.domain.ProductCategory;
 
 import lombok.Builder;
 import lombok.Data;

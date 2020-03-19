@@ -14,6 +14,7 @@ public class Basket {
     public String toString() {
     	Double totalTtc = content.stream().mapToDouble((be) -> be.getPttcPrice()).reduce(0, Double::sum);
     	Double totalHt = content.stream().mapToDouble((be) -> be.getPhtPrice()).reduce(0, Double::sum);
+    	//Double totalHt = content.stream().map((be) -> new BigDecimal(String.valueOf(be.getPhtPrice()))).reduce(new BigDecimal("0"), BigDecimal::add).doubleValue();
     	Double totalTaxes = totalTtc - totalHt;
 
     	StringBuilder sb = new StringBuilder();
