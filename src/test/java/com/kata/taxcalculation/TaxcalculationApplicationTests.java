@@ -78,22 +78,25 @@ class TaxCalculationApplicationTests {
 		Product p1 = Product.builder()
 				.name("livres")
 				.price(12.49)
-				.tax(10).isEssential(false)
+				.tax(10)
+				.isEssential(false)
 				.isImported(false)
 				.build();
 		Product p2 = Product.builder()
 				.name("CD musical")
 				.price(14.99)
-				.tax(20).isEssential(false)
+				.tax(20)
+				.isEssential(false)
 				.isImported(false)
 				.build();
 		Product p3 = Product.builder()
 				.name("barres de chocolat")
 				.price(0.85)
-				.tax(0).isEssential(true)
+				.tax(0)
+				.isEssential(true)
 				.isImported(false)
 				.build();
-		;
+		
 		productRepo.save(p1);
 		productRepo.save(p2);
 		productRepo.save(p3);
@@ -108,5 +111,103 @@ class TaxCalculationApplicationTests {
 		
 		assertEquals("5.53", panier.getTotalTaxes().toString());
 		assertEquals("48.05", panier.getTotalTtc().toString());
+	}
+	
+	/**
+	 * 
+	 * 2 boîtes de chocolats importée à 10€ : 21€
+	 * 3 flacons de parfum importé à 47.50€ : 178,15€
+	 * 
+	 * Montant des taxes : 36.65€
+	 * Total : 199.15€
+	 */
+	@Test
+	public void testTaxCalculationUC2() {
+		Product p1 = Product.builder()
+				.name("boîtes de chocolats")
+				.price(10)
+				.tax(0)
+				.isEssential(true)
+				.isImported(true)
+				.build();
+		Product p2 = Product.builder()
+				.name("flacons de parfum")
+				.price(47.5)
+				.tax(20)
+				.isEssential(false)
+				.isImported(true)
+				.build();
+		
+		productRepo.save(p1);
+		productRepo.save(p2);
+
+		Basket panier = new Basket();
+		panier.getContent().add(BasketEntry.builder().product(p1).itemCount(2).build());
+		panier.getContent().add(BasketEntry.builder().product(p2).itemCount(3).build());
+	
+		taxCalculationService.computeBasketPrice(panier);
+		System.out.println(panier.toString());
+		
+		assertEquals("36.65", panier.getTotalTaxes().toString());
+		assertEquals("199.15", panier.getTotalTtc().toString());
+	}
+	
+	/**
+	 * 
+	 * 2 flacons de parfum importé à 27.99€ : 70€
+	 * 1 flacon de parfum à 18.99€ : 22.8€
+	 * 3 boîtes de pilules contre la migraine à 9.75€ : 29.25€
+	 * 2 boîtes de chocolats importés à 11.25€ : 23.65€
+	 * 
+	 * Montant des taxes : 18.98
+	 * Total : 145,7
+	 */
+	@Test
+	public void testTaxCalculationUC3() {
+		Product p1 = Product.builder()
+				.name("flacons de parfum importé")
+				.price(27.99)
+				.tax(20)
+				.isEssential(false)
+				.isImported(true)
+				.build();
+		Product p2 = Product.builder()
+				.name("flacons de parfum")
+				.price(18.99)
+				.tax(20)
+				.isEssential(false)
+				.isImported(false)
+				.build();
+		Product p3 = Product.builder()
+				.name("pilules contre la migraine")
+				.price(9.75)
+				.tax(0)
+				.isEssential(true)
+				.isImported(false)
+				.build();
+		Product p4 = Product.builder()
+				.name("boîtes de chocolats")
+				.price(11.25)
+				.tax(0)
+				.isEssential(true)
+				.isImported(true)
+				.build();
+		
+		productRepo.save(p1);
+		productRepo.save(p2);
+		productRepo.save(p3);
+		productRepo.save(p4);
+
+		Basket panier = new Basket();
+		panier.getContent().add(BasketEntry.builder().product(p1).itemCount(2).build());
+		panier.getContent().add(BasketEntry.builder().product(p2).itemCount(1).build());
+		panier.getContent().add(BasketEntry.builder().product(p3).itemCount(3).build());
+		panier.getContent().add(BasketEntry.builder().product(p4).itemCount(2).build());
+	
+		taxCalculationService.computeBasketPrice(panier);
+		System.out.println(panier.toString());
+		
+		assertEquals("18.98", panier.getTotalTaxes().toString());
+		assertEquals("145.7", panier.getTotalTtc().toString());
 	}
 }

@@ -31,7 +31,7 @@ public class TaxComputerFactory {
         		tax = 0;
         	}
         	if(p.isImported()) {
-        		tax = tax + 10;
+        		tax = tax + 5;
         	}
 
         	// compute total price Hors Taxes
