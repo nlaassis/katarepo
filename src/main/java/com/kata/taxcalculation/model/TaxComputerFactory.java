@@ -9,6 +9,19 @@ import com.kata.taxcalculation.domain.Product;
  *
  */
 public class TaxComputerFactory {
+	
+	/**
+	 * Compute taxes on a given product
+	 * 
+	 * Le montant TTC est calculé comme suit :
+	 * Pttc = arrondi(Pht + somme(arrondi(Pht*t/100)))
+	 * Pttc: Prix TTC
+	 * Pht : Prix hors taxes
+	 * t : taxe applicable
+	 * 
+	 * @param p Product
+	 * @return
+	 */
     public static TaxComputer createTaxComputer(Product p) {
         return (nbOfItems) -> { 
         	double tax = p.getTax();

@@ -8,6 +8,7 @@ public enum ProductCategory {
 	
 	private String name = "";
 	private boolean isEssential = false;
+	// tax in percent
 	private double tax = 0;
 	
 	ProductCategory(String name, boolean isEssential, double tax) {

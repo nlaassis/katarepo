@@ -43,6 +43,7 @@ public class Product {
     @Column
     boolean isImported;
     
+    // tax in percent
     @Column
     double tax;
     
