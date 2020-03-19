@@ -2,6 +2,12 @@ package com.kata.taxcalculation.model;
 
 import com.kata.taxcalculation.domain.Product;
 
+/**
+ * Factory to build the functional interface TaxComputer
+ * 
+ * @author nordine.laassis
+ *
+ */
 public class TaxComputerFactory {
     public static TaxComputer createTaxComputer(Product p) {
         return (nbOfItems) -> { 
@@ -13,10 +19,14 @@ public class TaxComputerFactory {
         		tax = tax + 10;
         	}
 
+        	// compute total price Hors Taxes
         	double totalPriceHt = p.getPrice() * nbOfItems;
+        	// compute total taxes amount
         	double totalTaxTemp = (totalPriceHt * tax / 100);
+        	// round total taxes amount
         	double totalTaxRounded = roundTo5CentsUp(totalTaxTemp);
 
+        	// compute total price Toutes Taxes Comprises
         	double priceTtc = totalPriceHt + totalTaxRounded;
         	priceTtc = roundTo5CentsUp(priceTtc);
         	return priceTtc;

@@ -6,10 +6,19 @@ import java.util.stream.Collectors;
 
 import lombok.Data;
 
+/**
+ * Basket containing products
+ * 
+ * @author nordine.laassis
+ *
+ */
 @Data
 public class Basket {
     private List<BasketEntry> content = new ArrayList<BasketEntry>();
     
+    /**
+     * ToString method to print the ticket
+     */
     @Override
     public String toString() {
     	Double totalTtc = content.stream().mapToDouble((be) -> be.getPttcPrice()).reduce(0, Double::sum);

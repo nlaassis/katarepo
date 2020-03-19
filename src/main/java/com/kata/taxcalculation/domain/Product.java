@@ -12,6 +12,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Class representing a product
+ * Persisted via JPA
+ * 
+ * @author nordine.laassis
+ *
+ */
 @Entity
 @Data
 @NoArgsConstructor
