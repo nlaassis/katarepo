@@ -105,5 +105,8 @@ class TaxCalculationApplicationTests {
 	
 		taxCalculationService.computeBasketPrice(panier);
 		System.out.println(panier.toString());
+		
+		assertEquals("5.53", panier.getTotalTaxes().toString());
+		assertEquals("48.05", panier.getTotalTtc().toString());
 	}
 }

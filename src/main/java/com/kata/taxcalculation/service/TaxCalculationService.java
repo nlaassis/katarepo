@@ -40,5 +40,13 @@ public class TaxCalculationService {
                         .computeTax(be.getItemCount())));
                 	be.setPhtPrice(be.getItem().getPrice() * be.getItemCount());
                 });
+        
+    	Double totalTtc = basket.getContent().stream().map((be) -> new BigDecimal(be.getPttcPrice())).reduce(new BigDecimal(0), BigDecimal::add).doubleValue();
+    	Double totalHt = basket.getContent().stream().map((be) -> new BigDecimal(be.getPhtPrice())).reduce(new BigDecimal(0), BigDecimal::add).doubleValue();
+    	Double totalTaxes = new BigDecimal(Double.toString(totalTtc)).subtract(new BigDecimal(Double.toString(totalHt))).doubleValue();
+    	
+    	basket.setTotalTtc(totalTtc);
+    	basket.setTotalHt(totalHt);
+    	basket.setTotalTaxes(totalTaxes);
     }
 }

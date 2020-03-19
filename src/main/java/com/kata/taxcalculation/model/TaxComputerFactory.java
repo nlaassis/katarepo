@@ -1,5 +1,7 @@
 package com.kata.taxcalculation.model;
 
+import java.math.BigDecimal;
+
 import com.kata.taxcalculation.domain.Product;
 
 /**
